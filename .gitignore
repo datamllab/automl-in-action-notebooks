@@ -1,4 +1,6 @@
 .ipynb_checkpoints
 backup/
 image_classifier/
+structured_data_classifier/
+text_classifier/
 *.csv
