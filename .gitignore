@@ -2,5 +2,6 @@
 backup/
 image_classifier/
 structured_data_classifier/
+structured_data_regressor/
 text_classifier/
 *.csv
