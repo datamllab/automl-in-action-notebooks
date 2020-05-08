@@ -1,7 +1,10 @@
 .ipynb_checkpoints
 backup/
 image_classifier/
+image_regressor/
 structured_data_classifier/
 structured_data_regressor/
 text_classifier/
+text_regressor/
+auto_model/
 *.csv
