@@ -7,4 +7,7 @@ structured_data_regressor/
 text_classifier/
 text_regressor/
 auto_model/
+avltters/
+*.zip
 *.csv
+*.h5
