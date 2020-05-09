@@ -7,7 +7,9 @@ structured_data_regressor/
 text_classifier/
 text_regressor/
 auto_model/
-avltters/
+io_api_multitask/
+io_api_multimodal/
+avletters/
 *.zip
 *.csv
 *.h5
