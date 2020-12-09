@@ -2,3 +2,4 @@ pandas
 scikit-learn
 autokeras
 jupyter
+seaborn

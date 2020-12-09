@@ -2,6 +2,7 @@
 backup/
 image_classifier/
 image_regressor/
+model_autokeras/
 structured_data_classifier/
 structured_data_regressor/
 text_classifier/
