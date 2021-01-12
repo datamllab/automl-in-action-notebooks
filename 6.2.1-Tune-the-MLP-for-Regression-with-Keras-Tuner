@@ -1,0 +1,364 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "6.2.1.ipynb",
+      "provenance": [],
+      "collapsed_sections": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "lqlTcrAw_KVk",
+        "outputId": "96f2d0cf-823a-4e56-d76a-07efb3c6f331"
+      },
+      "source": [
+        "!pip install autokeras -q"
+      ],
+      "execution_count": 1,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "\u001b[K     |████████████████████████████████| 174kB 6.0MB/s \n",
+            "\u001b[K     |████████████████████████████████| 71kB 4.0MB/s \n",
+            "\u001b[?25h  Building wheel for keras-tuner (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Building wheel for terminaltables (setup.py) ... \u001b[?25l\u001b[?25hdone\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "46QEweKm_Q74"
+      },
+      "source": [
+        "# 6.2.1 Tune the MLP for regression with Keras Tuner"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "cCKgW8N7_X6E"
+      },
+      "source": [
+        "import tensorflow as tf\n",
+        "from tensorflow import keras\n",
+        "from tensorflow.keras import layers\n",
+        "\n",
+        "def build_model(hp):\n",
+        "  input_node = keras.Input(shape=(20,))\n",
+        "  units = hp.Int('units', min_value=32, max_value=512, step=32)\n",
+        "  output_node = layers.Dense(units=units, activation='relu')(input_node)\n",
+        "  output_node = layers.Dense(units=units, activation='relu')(output_node)\n",
+        "  output_node = layers.Dense(units=1, activation='sigmoid')(output_node)\n",
+        "  model = keras.Model(input_node, output_node)\n",
+        " \n",
+        "  optimizer = tf.keras.optimizers.Adam(learning_rate=1e-3)\n",
+        "  model.compile(\n",
+        "    optimizer=optimizer,\n",
+        "    loss='mse',\n",
+        "    metrics=['mae'])\n",
+        "  return model"
+      ],
+      "execution_count": 8,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "a7U_3XJC_X82"
+      },
+      "source": [
+        "from kerastuner import RandomSearch\n",
+        "\n",
+        "tuner = RandomSearch(\n",
+        "    build_model,\n",
+        "    objective='val_mae',\n",
+        "    max_trials=5,\n",
+        "    executions_per_trial=3,\n",
+        "    directory='my_dir',\n",
+        "    project_name='helloworld')"
+      ],
+      "execution_count": 9,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "CczfOgYi_X_d",
+        "outputId": "6f908a03-c2c3-4c4b-8a25-83bb126a50a4"
+      },
+      "source": [
+        "tuner.search_space_summary()"
+      ],
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Search space summary\n",
+            "Default search space size: 1\n",
+            "units (Int)\n",
+            "{'default': None, 'conditions': [], 'min_value': 32, 'max_value': 512, 'step': 32, 'sampling': None}\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "kbKKk5rm_YCG",
+        "outputId": "038e8db0-79bb-4a01-cfb9-38ed699475cc"
+      },
+      "source": [
+        "import numpy as np\n",
+        "\n",
+        "x_train = np.random.rand(100, 20)\n",
+        "y_train = np.random.rand(100, 1)\n",
+        "x_val = np.random.rand(20, 20)\n",
+        "y_val = np.random.rand(20, 1)\n",
+        "\n",
+        "tuner.search(x_train, y_train, epochs=1, validation_data=(x_val, y_val))\n",
+        "tuner.results_summary()"
+      ],
+      "execution_count": 11,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Trial 5 Complete [00h 00m 02s]\n",
+            "val_mae: 0.2220905969540278\n",
+            "\n",
+            "Best val_mae So Far: 0.2120091120402018\n",
+            "Total elapsed time: 00h 00m 11s\n",
+            "INFO:tensorflow:Oracle triggered exit\n",
+            "Results summary\n",
+            "Results in my_dir/helloworld\n",
+            "Showing 10 best trials\n",
+            "Objective(name='val_mae', direction='min')\n",
+            "Trial summary\n",
+            "Hyperparameters:\n",
+            "units: 288\n",
+            "Score: 0.2120091120402018\n",
+            "Trial summary\n",
+            "Hyperparameters:\n",
+            "units: 128\n",
+            "Score: 0.2220905969540278\n",
+            "Trial summary\n",
+            "Hyperparameters:\n",
+            "units: 320\n",
+            "Score: 0.22237977385520935\n",
+            "Trial summary\n",
+            "Hyperparameters:\n",
+            "units: 256\n",
+            "Score: 0.22893168032169342\n",
+            "Trial summary\n",
+            "Hyperparameters:\n",
+            "units: 192\n",
+            "Score: 0.23000877102216086\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "NH2i0SYr_YEj",
+        "outputId": "49ca2662-7f84-4d8a-9160-914c8e4fddde"
+      },
+      "source": [
+        "best_models = tuner.get_best_models(num_models=2)\n",
+        "best_model = best_models[0]\n",
+        "best_model.save('path_to_best_model')\n",
+        "print(best_model.predict(x_val))\n",
+        "best_model.summary()"
+      ],
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "INFO:tensorflow:Assets written to: path_to_best_model/assets\n",
+            "[[0.4977915 ]\n",
+            " [0.41781846]\n",
+            " [0.50711876]\n",
+            " [0.47860923]\n",
+            " [0.41595194]\n",
+            " [0.4969605 ]\n",
+            " [0.44580874]\n",
+            " [0.42493588]\n",
+            " [0.4926258 ]\n",
+            " [0.47569945]\n",
+            " [0.4430859 ]\n",
+            " [0.46065745]\n",
+            " [0.497313  ]\n",
+            " [0.48311725]\n",
+            " [0.46327966]\n",
+            " [0.46197027]\n",
+            " [0.45616627]\n",
+            " [0.46178862]\n",
+            " [0.4308407 ]\n",
+            " [0.46655235]]\n",
+            "Model: \"model\"\n",
+            "_________________________________________________________________\n",
+            "Layer (type)                 Output Shape              Param #   \n",
+            "=================================================================\n",
+            "input_1 (InputLayer)         [(None, 20)]              0         \n",
+            "_________________________________________________________________\n",
+            "dense (Dense)                (None, 288)               6048      \n",
+            "_________________________________________________________________\n",
+            "dense_1 (Dense)              (None, 288)               83232     \n",
+            "_________________________________________________________________\n",
+            "dense_2 (Dense)              (None, 1)                 289       \n",
+            "=================================================================\n",
+            "Total params: 89,569\n",
+            "Trainable params: 89,569\n",
+            "Non-trainable params: 0\n",
+            "_________________________________________________________________\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "P8TMOetFGzhG"
+      },
+      "source": [
+        "## Jointly tune the optimization function"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "lmZENbmk_YHM"
+      },
+      "source": [
+        "def rmse(y_true, y_pred):\n",
+        "  return tf.keras.backend.sqrt(tf.keras.losses.MSE(y_true, y_pred))\n",
+        "\n",
+        "def build_model(hp):\n",
+        "  input_node = keras.Input(shape=(20,))\n",
+        "  units = hp.Int('units', min_value=32, max_value=512, step=32)\n",
+        "  output_node = layers.Dense(units=units, activation='relu')(input_node)\n",
+        "  output_node = layers.Dense(units=units, activation='relu')(output_node)\n",
+        "  output_node = layers.Dense(units=1, activation='sigmoid')(output_node)\n",
+        "  model = keras.Model(input_node, output_node)\n",
+        "  optimizer_name = hp.Choice('optimizer', ['adam', 'adadelta'])\n",
+        "  learning_rate = hp.Float('learning_rate', min_value=1e-5, max_value=0.1, sampling='log')\n",
+        "  if optimizer_name == 'adam':\n",
+        "    optimizer = tf.keras.optimizer.Adam(learning_rate=learning_rate)\n",
+        "  else:\n",
+        "    optimizer = tf.keras.optimizer.Adadelta(learning_rate=learning_rate)\n",
+        "  model.compile(\n",
+        "    optimizer=optimizer,\n",
+        "    loss='mse',\n",
+        "    metrics=['mae', rmse])\n",
+        "  return model"
+      ],
+      "execution_count": 13,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "tUkc3QhpG8G3"
+      },
+      "source": [
+        "## Tune data preprocessing method"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "V_IS-iyi_YJz",
+        "outputId": "50fe840b-1d2e-4c3b-a084-1a76923d15a3"
+      },
+      "source": [
+        "from tensorflow.keras.layers.experimental.preprocessing import Normalization\n",
+        "\n",
+        "layer = Normalization(input_shape=(20,))\n",
+        "layer.adapt(x_train)\n",
+        "\n",
+        "model = tf.keras.Sequential([layer, tf.keras.layers.Dense(1)])\n",
+        "model.compile(optimizer='adam', loss='mse')\n",
+        "model.fit(x_train, y_train)"
+      ],
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "4/4 [==============================] - 0s 3ms/step - loss: 1.2505\n"
+          ],
+          "name": "stdout"
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<tensorflow.python.keras.callbacks.History at 0x7f6eb87215f8>"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 15
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "Dbr4Oekw_YMO"
+      },
+      "source": [
+        "from kerastuner import HyperModel\n",
+        "\n",
+        "class Regressor(HyperModel):\n",
+        "  def __init__(self, data):\n",
+        "    self.data = data\n",
+        "\n",
+        "  def build(self, hp):\n",
+        "    model = tf.keras.Sequential()\n",
+        "    if hp.Boolean('nomalize'):\n",
+        "        layer = Normalization(input_shape=(20,))\n",
+        "        layer.adapt(self.data)\n",
+        "        model.add(layer)\n",
+        "    model.add(tf.keras.layers.Dense(1))\n",
+        "    model.compile(optimizer='adam', loss='mse')\n",
+        "    return model"
+      ],
+      "execution_count": 16,
+      "outputs": []
+    }
+  ]
+}
