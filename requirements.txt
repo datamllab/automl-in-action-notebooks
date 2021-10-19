@@ -1,5 +1,12 @@
-pandas
-scikit-learn
-autokeras
-jupyter
-seaborn
+autokeras==1.0.17rc0
+keras-nightly==2.8.0.dev2021101807
+keras-tuner==1.0.4
+numpy==1.21.2
+pandas==1.3.4
+scikit-learn==1.0
+scipy==1.7.1
+tf-nightly==2.8.0.dev20211016
+matplotlib==3.4.3
+seaborn==0.11.2
+pydotplus==2.0.2
+graphviz==0.17

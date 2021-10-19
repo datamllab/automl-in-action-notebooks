@@ -15,3 +15,5 @@ avletters/
 *.csv
 *.h5
 *.png
+*.nbconvert.ipynb
+*.py
