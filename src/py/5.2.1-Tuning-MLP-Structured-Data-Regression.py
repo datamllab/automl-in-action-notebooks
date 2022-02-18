@@ -17,6 +17,8 @@ auto_model = ak.AutoModel(
     inputs=input_node, outputs=output_node, max_trials=10, overwrite=True, seed=42
 )
 
+"""invisible
+"""
 from sklearn.datasets import fetch_california_housing
 
 house_dataset = fetch_california_housing()
@@ -62,6 +64,8 @@ auto_model.tuner.results_summary(num_trials=1)
 best_model = auto_model.export_model()
 tf.keras.utils.plot_model(best_model, show_shapes=True, expand_nested=True)
 
+"""invisible
+"""
 from tensorflow import keras
 
 best_model.save("saved_model")
@@ -103,10 +107,16 @@ best_model = auto_model.export_model()
 tf.keras.utils.plot_model(
     best_model, show_shapes=True, expand_nested=True
 )  # rankdir='LR'
+"""invisible
+"""
 
 test_loss, test_acc = auto_model.evaluate(test_data, test_targets, verbose=0)
 print("Test accuracy: ", test_acc)
+"""invisible
+"""
 
 auto_model.tuner.results_summary(num_trials=1)
+"""invisible
+"""
 
 best_model.summary()

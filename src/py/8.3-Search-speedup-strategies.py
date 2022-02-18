@@ -59,11 +59,15 @@ model = ak.AutoModel(
 model.fit(x_train[:100], y_train[:100], epochs=1)
 model.evaluate(x_test, y_test)
 
+"""invisible
+"""
 import tensorflow as tf
 
 resnet = tf.keras.applications.ResNet50(include_top=False, weights="imagenet")
 resnet.summary()
 
+"""invisible
+"""
 import tensorflow as tf
 import kerastuner as kt
 

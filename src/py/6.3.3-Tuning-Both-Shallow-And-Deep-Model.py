@@ -45,6 +45,8 @@ def build_model(hp):
     return model
 
 
+"""invisible
+"""
 import pickle
 import os
 import tensorflow as tf
@@ -100,6 +102,9 @@ class ShallowDeepTuner(kt.Tuner):
         return model
 
 
+"""invisible
+"""
+
 from sklearn.datasets import load_digits
 
 # Load the hand-written digits dataset
@@ -127,6 +132,8 @@ print(y_train.shape)
 print(x_test.shape)
 print(y_train[:10])
 
+"""invisible
+"""
 random_tuner = ShallowDeepTuner(
     oracle=kt.oracles.RandomSearch(
         objective=kt.Objective("accuracy", "max"), max_trials=30, seed=42
@@ -138,12 +145,18 @@ random_tuner = ShallowDeepTuner(
 
 random_tuner.search(x_train, y_train, validation_data=(x_val, y_val), epochs=10)
 
+"""invisible
+"""
 random_tuner.search_space_summary()
 random_tuner.results_summary(30)
 
+"""invisible
+"""
 best_model = random_tuner.get_best_models(1)[0]
 print(type(best_model))
 
+"""invisible
+"""
 # Evaluate the best discovered model
 from sklearn.metrics import accuracy_score
 

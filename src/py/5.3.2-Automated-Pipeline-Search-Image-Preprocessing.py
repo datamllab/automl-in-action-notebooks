@@ -5,9 +5,6 @@ pip install -r https://raw.githubusercontent.com/datamllab/automl-in-action-note
 import tensorflow as tf
 import autokeras as ak
 
-gpus = tf.config.experimental.list_physical_devices("GPU")
-tf.config.experimental.set_visible_devices(gpus[-1], "GPU")
-
 """
 ## Load Cifar10 dataset
 """
@@ -18,6 +15,8 @@ from tensorflow.keras.datasets import cifar10
 print("Training image shape:", x_train.shape)  # (60000, 28, 28)
 print("Training label shape:", y_train.shape)  # (60000,)
 print("First five training labels:", y_train[:5])  # array([5 0 4 1 9], dtype=uint8)
+"""invisible
+"""
 
 airplane_automobile_indices_train = (y_train[:, 0] == 0) | (y_train[:, 0] == 1)
 airplane_automobile_indices_test = (y_test[:, 0] == 0) | (y_test[:, 0] == 1)
@@ -32,6 +31,8 @@ x_test, y_test = (
 print("Training image shape:", x_train.shape)  # (60000, 28, 28)
 print("Training label shape:", y_train.shape)  # (60000,)
 print("First five training labels:", y_train[:5])  # array([5 0 4 1 9], dtype=uint8)
+"""invisible
+"""
 
 # plot first few images
 from matplotlib import pyplot as plt
@@ -59,6 +60,8 @@ clf = ak.AutoModel(
 )
 clf.fit(x_train, y_train, epochs=10)
 
+"""invisible
+"""
 import autokeras as ak
 import timeit
 
@@ -82,10 +85,16 @@ auto_model.fit(x_train, y_train, epochs=10, batch_size=64)
 stop_time = timeit.default_timer()
 print("Total time: {time} seconds.".format(time=round(stop_time - start_time, 2)))
 
+"""invisible
+"""
 auto_model.tuner.results_summary()
+"""invisible
+"""
 
 best_model = auto_model.export_model()
 best_model.summary()
+"""invisible
+"""
 
 test_loss, test_acc = auto_model.evaluate(x_test, y_test, verbose=0)
 print("Accuracy: {accuracy}%".format(accuracy=round(test_acc * 100, 2)))

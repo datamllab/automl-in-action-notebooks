@@ -9,6 +9,8 @@ from tensorflow.keras.datasets import fashion_mnist
 x_train = x_train.astype("float32") / 255.0
 x_test = x_test.astype("float32") / 255.0
 
+"""invisible
+"""
 import tensorflow as tf
 from tensorflow.keras.models import Model
 from tensorflow.keras import layers, losses
@@ -36,6 +38,9 @@ class AutoencoderModel(Model):
         return self.decode(self.encode(x))
 
 
+"""invisible
+"""
+
 import numpy as np
 
 tf.random.set_seed(5)
@@ -48,8 +53,12 @@ autoencoder.fit(
 
 autoencoder.evaluate(x_test, x_test)
 
+"""invisible
+"""
 autoencoder.encode(x_test[:1])
 
+"""invisible
+"""
 import matplotlib.pyplot as plt
 
 
@@ -78,6 +87,8 @@ def show_images(model, images):
 
 show_images(autoencoder, x_test)
 
+"""invisible
+"""
 import keras_tuner
 from tensorflow import keras
 from keras_tuner import RandomSearch
@@ -127,6 +138,10 @@ class AutoencoderBlock(keras.Model):
         return self.decode(self.encode(x))
 
 
+"""invisible
+"""
+
+
 def build_model(hp):
     latent_dim = 20
     autoencoder = AutoencoderBlock(latent_dim, hp)
@@ -145,6 +160,8 @@ tuner = RandomSearch(
 
 tuner.search(x_train, x_train, epochs=10, validation_data=(x_test, x_test))
 
+"""invisible
+"""
 autoencoder = tuner.get_best_models(num_models=1)[0]
 tuner.results_summary(1)
 autoencoder.evaluate(x_test, x_test)

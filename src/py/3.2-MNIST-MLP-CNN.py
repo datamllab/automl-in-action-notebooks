@@ -19,10 +19,16 @@ from tensorflow.keras.datasets import mnist
 """
 
 train_images.shape, test_images.shape
+"""invisible
+"""
 
 len(train_labels), len(test_labels)
+"""invisible
+"""
 
 train_labels, test_labels
+"""invisible
+"""
 
 import matplotlib.pyplot as plt
 
@@ -80,9 +86,15 @@ mlp_model.compile(
     metrics=["accuracy"],
 )
 
+"""invisible
+"""
 mlp_model.summary()
+"""invisible
+"""
 
 mlp_model.fit(train_images, train_labels, epochs=5, batch_size=64, verbose=1)
+"""invisible
+"""
 
 test_loss, test_acc = mlp_model.evaluate(test_images, test_labels, verbose=0)
 test_acc
@@ -116,15 +128,26 @@ def build_cnn():
     return model
 
 
+"""invisible
+"""
+
 cnn_model = build_cnn()
 
+"""invisible
+"""
 cnn_model.summary()
 
+"""invisible
+"""
 train_images_4d = train_images[..., tf.newaxis]
 test_images_4d = test_images[..., tf.newaxis]
 train_images_4d.shape, test_images_4d.shape
 
+"""invisible
+"""
 cnn_model.fit(train_images_4d, train_labels, epochs=5, batch_size=64, verbose=1)
+"""invisible
+"""
 
 test_loss, test_acc = cnn_model.evaluate(test_images_4d, test_labels, verbose=0)
 test_acc
@@ -136,8 +159,12 @@ test_acc
 test_predictions = cnn_model.predict(test_images_4d)
 test_predictions[:5]
 
+"""invisible
+"""
 import numpy as np
 
 np.argmax(test_predictions[0])
+"""invisible
+"""
 
 test_labels[0]

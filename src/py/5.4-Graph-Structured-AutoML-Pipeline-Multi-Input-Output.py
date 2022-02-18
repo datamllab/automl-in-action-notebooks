@@ -33,6 +33,8 @@ clf_target_train, clf_target_test = (
 regression_target = np.random.rand(num_instances, 1).astype(np.float32)
 reg_target_train, reg_target_test = regression_target[:800], regression_target[800:]
 
+"""invisible
+"""
 structured_train[:5]
 
 """
@@ -82,6 +84,8 @@ auto_model.tuner.results_summary()
 best_model = auto_model.export_model()
 best_model.summary()
 
+"""invisible
+"""
 tf.keras.utils.plot_model(
     best_model, show_shapes=True, expand_nested=True
 )  # rankdir='LR'

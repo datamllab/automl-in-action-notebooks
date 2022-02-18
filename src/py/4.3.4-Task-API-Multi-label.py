@@ -21,6 +21,8 @@ X, Y = make_multilabel_classification(
 )
 X = X.reshape((100, 8, 8))
 X.shape, Y.shape
+"""invisible
+"""
 
 x_train, x_test, y_train, y_test = X[:80], X[80:], Y[:80], Y[80:]
 
@@ -52,5 +54,7 @@ print(
     )
 )
 
+"""invisible
+"""
 test_loss, test_acc = clf.evaluate(x_test, y_test, verbose=0)
 print("Test accuracy: ", test_acc)

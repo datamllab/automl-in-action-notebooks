@@ -54,6 +54,8 @@ auto_model.tuner.results_summary(1)
 best_model = auto_model.export_model()
 best_model.summary()
 
+"""invisible
+"""
 tf.keras.utils.plot_model(best_model, show_shapes=True, expand_nested=True)
 
 """

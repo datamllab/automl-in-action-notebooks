@@ -28,6 +28,8 @@ X_train, X_val, y_train, y_val = train_test_split(
     X_train, y_train, test_size=0.2, shuffle=False
 )
 
+"""invisible
+"""
 X_train.shape, X_test.shape
 
 """
@@ -356,6 +358,8 @@ bo_tuner = LightGBMTuner(
 
 bo_tuner.search(X_train, y_train, validation_data=(X_val, y_val))
 
+"""invisible
+"""
 from sklearn.metrics import mean_squared_error
 
 best_model = bo_tuner.get_best_models(1)[0]
@@ -363,6 +367,8 @@ y_pred_test = best_model.predict(X_test)
 test_mse = mean_squared_error(y_test, y_pred_test)
 print("The prediction MSE on test set: {}".format(test_mse))
 
+"""invisible
+"""
 bo_tuner.results_summary(1)
 
 """
@@ -393,6 +399,9 @@ def plot_curves(
     plt.show()
 
 
+"""invisible
+"""
+
 mse_bo = [
     bo_tuner.oracle.get_trial(trial_id).score for trial_id in bo_tuner.oracle.end_order
 ]
@@ -414,6 +423,8 @@ plot_curve(
     "Searched results",
 )
 
+"""invisible
+"""
 random_tuner = LightGBMTuner(
     oracle=kt.oracles.RandomSearch(
         objective=kt.Objective("mse", "min"), max_trials=100, seed=42
@@ -425,6 +436,8 @@ random_tuner = LightGBMTuner(
 
 random_tuner.search(X_train, y_train, validation_data=(X_val, y_val))
 
+"""invisible
+"""
 from sklearn.metrics import mean_squared_error
 
 best_model = random_tuner.get_best_models(1)[0]
@@ -432,8 +445,12 @@ y_pred_test = best_model.predict(X_test)
 test_mse = mean_squared_error(y_test, y_pred_test)
 print("The prediction MSE on test set: {}".format(test_mse))
 
+"""invisible
+"""
 random_tuner.results_summary(1)
 
+"""invisible
+"""
 mse_random = [
     random_tuner.oracle.get_trial(trial_id).score
     for trial_id in random_tuner.oracle.end_order

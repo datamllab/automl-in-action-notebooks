@@ -16,6 +16,8 @@ tuner = MyTuner(max_trials=20)
 tuner.search()
 tuner.results_summary()
 
+"""invisible
+"""
 import os
 import pickle
 import tensorflow as tf
@@ -53,6 +55,9 @@ class ShallowTuner(kt.Tuner):
             return pickle.load(f)
 
 
+"""invisible
+"""
+
 from sklearn.datasets import load_digits
 
 # Load the hand-written digits dataset
@@ -76,6 +81,8 @@ X_train, X_val, y_train, y_val = train_test_split(
     X_train, y_train, test_size=0.2, shuffle=False
 )
 
+"""invisible
+"""
 
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
@@ -113,6 +120,8 @@ my_sklearn_tuner = ShallowTuner(
 
 my_sklearn_tuner.search(X_train, y_train, validation_data=(X_val, y_val))
 
+"""invisible
+"""
 # Evaluate the best discovered model
 from sklearn.metrics import accuracy_score
 

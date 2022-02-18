@@ -16,6 +16,8 @@ clf = ak.ImageClassifier(
 )
 clf.fit(x_train, y_train, epochs=1)
 
+"""invisible
+"""
 import keras_tuner as kt
 
 
@@ -32,6 +34,9 @@ def build_model(hp):
     model.compile(optimizer="adam", loss="sparse_categorical_crossentropy")
     return model
 
+
+"""invisible
+"""
 
 tuner = kt.RandomSearch(
     build_model,

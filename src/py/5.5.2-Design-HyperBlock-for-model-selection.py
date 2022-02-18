@@ -42,6 +42,9 @@ class SelectionBlock(ak.Block):
         return outputs
 
 
+"""invisible
+"""
+
 # Model selection block with conditional scope
 class SelectionBlock(ak.Block):
     def build(self, hp, inputs):
@@ -68,4 +71,6 @@ from tensorflow.keras.datasets import cifar10
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 auto_model.fit(x_train[:100], y_train[:100], epochs=1)
 
+"""invisible
+"""
 auto_model.tuner.search_space_summary()

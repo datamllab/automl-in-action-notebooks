@@ -20,6 +20,9 @@ def build_model(hp):
     return model
 
 
+"""invisible
+"""
+
 from keras_tuner import RandomSearch
 
 tuner = RandomSearch(
@@ -31,8 +34,12 @@ tuner = RandomSearch(
     project_name="helloworld",
 )
 
+"""invisible
+"""
 tuner.search_space_summary()
 
+"""invisible
+"""
 import numpy as np
 
 x_train = np.random.rand(100, 20)
@@ -42,8 +49,12 @@ y_val = np.random.rand(20, 1)
 
 tuner.search(x_train, y_train, epochs=1, validation_data=(x_val, y_val))
 
+"""invisible
+"""
 tuner.results_summary(5)
 
+"""invisible
+"""
 from tensorflow import keras
 
 best_models = tuner.get_best_models(num_models=2)
@@ -52,6 +63,9 @@ best_model.save("path_to_best_model")
 best_model = keras.models.load_model("path_to_best_model")
 print(best_model.predict(x_val))
 best_model.summary()
+
+"""invisible
+"""
 
 
 def build_model(hp):
@@ -82,6 +96,8 @@ tuner = RandomSearch(
     project_name="helloworld",
 )
 
+"""invisible
+"""
 import keras_tuner as kt
 
 
@@ -119,6 +135,8 @@ tuner = RandomSearch(
     project_name="helloworld",
 )
 
+"""invisible
+"""
 from tensorflow.keras.layers.experimental.preprocessing import Normalization
 
 layer = Normalization(input_shape=(20,))
@@ -128,10 +146,14 @@ model = tf.keras.Sequential([layer, tf.keras.layers.Dense(1)])
 model.compile(optimizer="adam", loss="mse")
 model.fit(x_train, y_train)
 
+"""invisible
+"""
 normalized_x_train = layer(x_train)
 dataset_x_train = tf.data.Dataset.from_tensor_slices(x_train).batch(32)
 normalized_dataset = dataset_x_train.map(layer)
 
+"""invisible
+"""
 from keras_tuner import HyperModel
 
 
@@ -149,6 +171,9 @@ class Regressor(HyperModel):
             x = layer(x)
         return model.fit(x=x, y=y, **kwargs)
 
+
+"""invisible
+"""
 
 tuner = RandomSearch(Regressor(), objective="val_loss", max_trials=2)
 tuner.search(x_train, y_train, validation_data=(x_val, y_val))

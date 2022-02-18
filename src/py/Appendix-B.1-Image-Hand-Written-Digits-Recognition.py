@@ -16,6 +16,8 @@ digits = load_digits()
 images, labels = digits.images, digits.target
 images.shape, labels.shape
 
+"""invisible
+"""
 import numpy as np
 
 np.max(images), np.max(labels), np.min(images), np.min(labels)
@@ -46,11 +48,15 @@ for i in range(n):
     )
     axes[row, col].set_title("Label: %i" % labels[i])
 
+"""invisible
+"""
 # reshape images to vectors
 n_samples = len(digits.images)
 X = digits.images.reshape((n_samples, -1))
 X.shape
 
+"""invisible
+"""
 # Split data into train and test subsets
 from sklearn.model_selection import train_test_split
 
@@ -61,6 +67,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 print("Shape of the training data: {}".format(X_train.shape))
 print("Shape of the testing data: {}".format(X_test.shape))
 
+"""invisible
+"""
 X_train.shape, X_test.shape
 
 """
@@ -78,11 +86,17 @@ X_train_pca = pca.transform(X_train)
 print(X_train.shape)
 print(X_train_pca.shape)
 
+"""invisible
+"""
 X_train.shape, X_train_pca.shape
 
+"""invisible
+"""
 plt.hist(pca.explained_variance_ratio_, bins=10, log=True)
 pca.explained_variance_ratio_.sum()
 
+"""invisible
+"""
 plt.figure(figsize=(8, 6))
 plt.scatter(
     X_train_pca[:, 0],
@@ -107,6 +121,8 @@ tsne = TSNE(n_components=2, random_state=42)
 
 X_train_tsne = tsne.fit_transform(X_train)
 
+"""invisible
+"""
 plt.figure(figsize=(8, 6))
 plt.scatter(
     X_train_tsne[:, 0],
@@ -214,6 +230,8 @@ grid_search = GridSearchCV(
 # Fit the grid search object to the training data to search the optimal model
 grid_search = grid_search.fit(X_train, y_train)
 
+"""invisible
+"""
 cvres = grid_search.cv_results_
 for mean_score, params in zip(cvres["mean_test_score"], cvres["params"]):
     print(mean_score, params)

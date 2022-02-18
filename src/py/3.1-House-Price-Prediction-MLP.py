@@ -31,6 +31,8 @@ target = pd.Series(house_dataset.target, name="MEDV")
 # Visualize the first 5 samples of the data
 data.head(5)
 
+"""invisible
+"""
 # Split data into training and test dataset
 from sklearn.model_selection import train_test_split
 
@@ -44,8 +46,12 @@ print("\n--Shape of the target vector--\n {}".format(target.shape))
 print("\n--Shape of the training data--\n {}".format(train_data.shape))
 print("\n--Shape of the testing data--\n {}".format(test_data.shape))
 
+"""invisible
+"""
 train_data.shape, test_data.shape
 
+"""invisible
+"""
 train_data
 
 """
@@ -83,7 +89,11 @@ example_batch = normed_train_data[:5]
 example_result = model.predict(example_batch)
 example_result
 
+"""invisible
+"""
 model.summary()
+"""invisible
+"""
 
 # Customize the optimizer configuration (learning rate here)
 optimizer = tf.keras.optimizers.RMSprop(0.01)
@@ -94,6 +104,8 @@ model.compile(loss="mse", optimizer=optimizer, metrics=["mae", "mse"])
 """
 
 model.fit(normed_train_data, train_targets, epochs=300, batch_size=1024, verbose=1)
+"""invisible
+"""
 
 loss, mae, mse = model.evaluate(normed_test_data, test_targets, verbose=0)
 mse
@@ -131,12 +143,16 @@ history = model.fit(
     batch_size=1024,
     verbose=1,
 )
+"""invisible
+"""
 
 import pandas as pd
 
 hist = pd.DataFrame(history.history)
 hist["epoch"] = history.epoch
 hist.tail()
+"""invisible
+"""
 
 import matplotlib.pyplot as plt
 
@@ -150,6 +166,8 @@ plt.title("Training and Validation MSE by Epoch")
 plt.legend()
 # Display a figure.
 plt.show()
+"""invisible
+"""
 
 import numpy as np
 
@@ -169,6 +187,8 @@ def smooth_curve(values, std=5):
     return smoothed_values / smoothed_weights
 
 
+"""invisible
+"""
 import matplotlib.pyplot as plt
 
 plt.plot(hist["epoch"], smooth_curve(hist["mse"]), label="train mse")
@@ -190,9 +210,13 @@ plt.show()
 model = build_model()
 model.fit(normed_train_data, train_targets, epochs=150, batch_size=1024, verbose=1)
 
+"""invisible
+"""
 loss, mae, mse = model.evaluate(normed_test_data, test_targets, verbose=0)
 mse
 
+"""invisible
+"""
 test_predictions = model.predict(normed_test_data).flatten()
 
 a = plt.axes(aspect="equal")

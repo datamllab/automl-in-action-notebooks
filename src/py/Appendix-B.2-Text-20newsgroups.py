@@ -42,6 +42,8 @@ count_vec = CountVectorizer()
 X_train_counts = count_vec.fit_transform(doc_train)
 X_train_counts.shape
 
+"""invisible
+"""
 # TF-IDF
 from sklearn.feature_extraction.text import TfidfTransformer
 
@@ -63,6 +65,8 @@ from sklearn.linear_model import LogisticRegression
 lr_clf = LogisticRegression(multi_class="ovr", random_state=42)
 lr_clf.fit(X_train_tfidf, label_train)
 
+"""invisible
+"""
 # Test
 from sklearn.metrics import accuracy_score
 
@@ -96,6 +100,8 @@ from sklearn.naive_bayes import MultinomialNB
 
 nb_clf = MultinomialNB().fit(X_train_tfidf, label_train)
 
+"""invisible
+"""
 # Test
 X_test_counts = count_vec.transform(doc_test)
 X_test_tfidf = tfidf_transformer.transform(X_test_counts)
@@ -152,6 +158,8 @@ grid_search = GridSearchCV(
 # Fit the grid search object to the training data to search the optimal model
 grid_search = grid_search.fit(doc_train, label_train)
 
+"""invisible
+"""
 cvres = grid_search.cv_results_
 for mean_score, params in zip(cvres["mean_test_score"], cvres["params"]):
     print(mean_score, params)
@@ -181,6 +189,8 @@ test_acc = accuracy_score(label_test, label_pred_test)
 print("\nThe prediction accuracy on training set: {:.2f} %".format(train_acc * 100))
 print("The prediction accuracy on test set: {:.2f} %".format(test_acc * 100))
 
+"""invisible
+"""
 
 train_acc = accuracy_score(label_train, label_pred_train)
 test_acc = accuracy_score(label_test, label_pred_test)

@@ -24,6 +24,8 @@ from sklearn.model_selection import train_test_split
 train_data, test_data, train_targets, test_targets = train_test_split(
     data, target, test_size=0.2, random_state=42
 )
+"""invisible
+"""
 
 # Check the shape of whole dataset and the splited training and test set
 print("--Shape of the whole data--\n {}".format(data.shape))

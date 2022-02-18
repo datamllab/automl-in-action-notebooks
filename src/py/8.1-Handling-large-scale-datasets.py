@@ -64,6 +64,8 @@ all_train_data = ak.image_dataset_from_directory(
 train_data = all_train_data.take(int(60000 / batch_size * 0.8))
 validation_data = all_train_data.skip(int(60000 / batch_size * 0.8))
 
+"""invisible
+"""
 train_data = ak.image_dataset_from_directory(
     os.path.join(parent_dir, "train"),
     validation_split=0.2,
@@ -84,6 +86,8 @@ validation_data = ak.image_dataset_from_directory(
     batch_size=batch_size,
 )
 
+"""invisible
+"""
 import tensorflow as tf
 
 train_data = train_data.prefetch(5)
@@ -143,6 +147,8 @@ test_data = ak.text_dataset_from_directory(
     max_length=1000,
 ).prefetch(1000)
 
+"""invisible
+"""
 clf = ak.TextClassifier(overwrite=True, max_trials=1)
 clf.fit(train_data, epochs=2, validation_data=validation_data)
 print(clf.evaluate(test_data))
@@ -162,10 +168,14 @@ def generator():
 for x in generator():
     print(x)
 
+"""invisible
+"""
 dataset = tf.data.Dataset.from_generator(generator, output_types=tf.int32)
 for x in dataset:
     print(x.numpy())
 
+"""invisible
+"""
 import numpy as np
 
 parent_dir = "imdb"
@@ -218,6 +228,8 @@ for texts, labels in train_data.take(1):
     print(texts.shape)
     print(labels.shape)
 
+"""invisible
+"""
 clf = ak.TextClassifier(overwrite=True, max_trials=1)
 clf.fit(train_data, epochs=2, validation_data=validation_data)
 print(clf.evaluate(test_data))

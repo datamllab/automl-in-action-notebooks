@@ -27,6 +27,8 @@ n_samples = len(images)
 X = images.reshape((n_samples, -1))
 X.shape
 
+"""invisible
+"""
 # Split data into train and test subsets
 from sklearn.model_selection import train_test_split
 
@@ -37,6 +39,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 print("Shape of the training data: {}".format(X_train.shape))
 print("Shape of the testing data: {}".format(X_test.shape))
 
+"""invisible
+"""
 X_train.shape, X_test.shape
 
 """inline
@@ -109,10 +113,16 @@ random_tuner = kt.tuners.SklearnTuner(
 
 random_tuner.search(X_train, y_train)
 
+"""invisible
+"""
 random_tuner.search_space_summary()
 
+"""invisible
+"""
 random_tuner.results_summary(1)
 
+"""invisible
+"""
 # Evaluate the best discovered model
 from sklearn.metrics import accuracy_score
 
@@ -172,8 +182,12 @@ tuner = kt.tuners.Sklearn(
 )
 tuner.search(X_train, y_train)
 
+"""invisible
+"""
 tuner.results_summary(1)
 
+"""invisible
+"""
 # Evaluate the best discovered model
 from sklearn.metrics import accuracy_score
 
@@ -183,6 +197,8 @@ y_pred_test = best_pipeline.predict(X_test)
 test_acc = accuracy_score(y_test, y_pred_test)
 print("The prediction accuracy on test set: {:.2f} %".format(test_acc * 100))
 
+"""invisible
+"""
 bo_tuner = kt.tuners.SklearnTuner(
     oracle=kt.oracles.BayesianOptimization(
         objective=kt.Objective("score", "max"), max_trials=30, seed=42
@@ -195,10 +211,16 @@ bo_tuner = kt.tuners.SklearnTuner(
 
 bo_tuner.search(X_train, y_train)
 
+"""invisible
+"""
 bo_tuner.search_space_summary()
 
+"""invisible
+"""
 bo_tuner.results_summary(1)
 
+"""invisible
+"""
 # Evaluate the best discovered model
 from sklearn.metrics import accuracy_score
 
@@ -220,6 +242,8 @@ TEST_DATA_URL = "https://storage.googleapis.com/tf-datasets/titanic/eval.csv"
 train_file_path = tf.keras.utils.get_file("train.csv", TRAIN_DATA_URL)
 test_file_path = tf.keras.utils.get_file("eval.csv", TEST_DATA_URL)
 
+"""invisible
+"""
 import pandas as pd
 
 x_train = pd.read_csv(train_file_path)
@@ -231,6 +255,8 @@ y_test = x_test.pop("survived")
 
 x_train.head()
 
+"""invisible
+"""
 from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
@@ -263,6 +289,8 @@ int_transformer = Pipeline(
     ]
 )
 
+"""invisible
+"""
 from sklearn.base import BaseEstimator, TransformerMixin
 
 
@@ -285,11 +313,19 @@ class CategoricalCombination(BaseEstimator, TransformerMixin):
         return temp_column
 
 
+"""invisible
+"""
+
 temp_data = pd.DataFrame({"1": ["A", "A", "A", "B", "B", "B"], "2": [1, 0, 1, 0, 1, 1]})
 print(temp_data.head(6))
 
+"""invisible
+"""
 transformer = CategoricalCombination("1", "2")
 print(transformer.fit_transform(temp_data))
+
+"""invisible
+"""
 
 
 class MeanEncoder(BaseEstimator, TransformerMixin):
@@ -306,6 +342,9 @@ class MeanEncoder(BaseEstimator, TransformerMixin):
         return x[self.categorical_name].map(self.mean).to_frame()
 
 
+"""invisible
+"""
+
 temp_data = pd.DataFrame(
     {"a": ["A", "A", "B", "B", "C", "C"], "b": [1, 1, 1, 0, 1, -1]}
 )
@@ -313,6 +352,8 @@ print(temp_data.head(6))
 encoder = MeanEncoder("a", "b")
 print(encoder.fit_transform(temp_data).head(6))
 
+"""invisible
+"""
 from sklearn.compose import ColumnTransformer
 
 column_transformer = ColumnTransformer(
@@ -329,6 +370,8 @@ column_transformer = ColumnTransformer(
     ]
 )
 
+"""invisible
+"""
 from sklearn.svm import SVC
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import mutual_info_classif
@@ -342,11 +385,15 @@ pipeline = Pipeline(
 )
 pipeline.fit(x_train, y_train)
 
+"""invisible
+"""
 from sklearn.metrics import accuracy_score
 
 y_pred = pipeline.predict(x_test)
 print("Accuracy: ", accuracy_score(y_test, y_pred))
 
+"""invisible
+"""
 import numpy as np
 
 mean_column_pairs = []
@@ -362,6 +409,8 @@ for index1 in range(len(int_columns)):
 mean_column_pairs = np.array(mean_column_pairs)
 cat_column_pairs = np.array(cat_column_pairs)
 
+"""invisible
+"""
 transformers = []
 for index, (col1, col2) in enumerate(cat_column_pairs):
     if not hp.Boolean("combine_{i}".format(i=index)):
@@ -370,6 +419,8 @@ for index, (col1, col2) in enumerate(cat_column_pairs):
     col2 = str(col2)
     transformers.append((col1 + col2, CategoricalCombination(col1, col2), [col1, col2]))
 
+"""invisible
+"""
 import keras_tuner as kt
 
 
@@ -437,8 +488,12 @@ def build_model(hp):
     return pipeline
 
 
+"""invisible
+"""
 build_model(kt.HyperParameters()).fit(x_train, y_train)
 
+"""invisible
+"""
 from sklearn import metrics
 import sklearn
 

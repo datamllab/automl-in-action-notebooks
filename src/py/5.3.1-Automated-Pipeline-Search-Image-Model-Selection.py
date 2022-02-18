@@ -92,6 +92,8 @@ tf.keras.utils.plot_model(
     best_xception_model, show_shapes=True, expand_nested=True
 )  # rankdir='LR'
 
+"""invisible
+"""
 best_xception_model.summary()
 
 """
@@ -129,10 +131,16 @@ auto_model.fit(x_train[:100], y_train[:100], epochs=1, batch_size=8)
 stop_time = timeit.default_timer()
 print("Total time: {time} seconds.".format(time=round(stop_time - start_time, 2)))
 
+"""invisible
+"""
 auto_model.tuner.results_summary(num_trials=1)
 
+"""invisible
+"""
 best_model = auto_model.export_model()
 best_model.summary()
+"""invisible
+"""
 
 # Only evaluating the first 100 samples as a quick demo
 test_loss, test_acc = auto_model.evaluate(x_test[:100], y_test[:100], batch_size=8)

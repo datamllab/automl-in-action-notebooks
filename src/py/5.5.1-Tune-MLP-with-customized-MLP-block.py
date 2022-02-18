@@ -22,6 +22,8 @@ def build_mlp():
 
 
 mlp_model = build_mlp()
+"""invisible
+"""
 
 import autokeras as ak
 import tensorflow as tf
@@ -40,6 +42,9 @@ class MlpBlock(ak.Block):
 
         return output_node
 
+
+"""invisible
+"""
 
 import autokeras as ak
 import tensorflow as tf
@@ -82,6 +87,9 @@ class MlpBlock(ak.Block):
         return output_node
 
 
+"""invisible
+"""
+
 import autokeras as ak
 import tensorflow as tf
 from tensorflow.keras import layers
@@ -111,6 +119,8 @@ import keras_tuner as kt
 hp = kt.HyperParameters()
 inputs = tf.keras.Input(shape=(20,))
 MlpBlock().build(hp, inputs)
+"""invisible
+"""
 
 import numpy as np
 
@@ -123,7 +133,11 @@ output_node = MlpBlock()(input_node)
 output_node = ak.RegressionHead()(output_node)
 auto_model = ak.AutoModel(input_node, output_node, max_trials=3, overwrite=True)
 auto_model.fit(x_train, y_train, epochs=1)
+"""invisible
+"""
 
 auto_model.predict(x_test).shape
+"""invisible
+"""
 
 auto_model.tuner.search_space_summary()

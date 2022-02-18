@@ -15,6 +15,9 @@ house_dataset = fetch_california_housing()
 # Display the oringal data
 house_dataset.keys()
 
+"""invisible
+"""
+
 # Import pandas package to format the data
 import pandas as pd
 
@@ -44,6 +47,9 @@ print("\n--Shape of the target vector--\n {}".format(target.shape))
 print("\n--Shape of the training data--\n {}".format(X_train.shape))
 print("\n--Shape of the testing data--\n {}".format(X_test.shape))
 
+"""invisible
+"""
+
 (data.shape, target.shape), (X_train.shape, y_train.shape), (X_test.shape, y_test.shape)
 
 """
@@ -55,6 +61,8 @@ print("\n--Shape of the testing data--\n {}".format(X_test.shape))
 """
 
 data.dtypes
+"""invisible
+"""
 
 # Check for feature value type
 print("-- Feature type --\n{}".format(data.dtypes))
@@ -116,6 +124,8 @@ correlation_matrix = train_data.corr().round(2)
 sns.heatmap(
     data=correlation_matrix, square=True, annot=True, cmap="Blues"
 )  # fmt='.1f', annot_kws={'size':15},
+"""invisible
+"""
 
 # Select high correlation features & display the pairplot
 
@@ -162,6 +172,8 @@ print("Learned intercept: {:.2f}".format(linear_regressor.intercept_))
 
 print("\n--The learned coefficient value learned by the linear regression model--")
 print(coeffcients)
+"""invisible
+"""
 
 
 # Import the built-in MSE metric
@@ -176,6 +188,8 @@ print("\n--Train MSE--\n{}".format(mean_squared_error(y_train, y_pred_train)))
 y_pred_test = linear_regressor.predict(X_test)
 
 print("Test MSE: {:.2f}".format(mean_squared_error(y_test, y_pred_test)))
+"""invisible
+"""
 
 # Visualizing the differences between actual prices and predicted values
 plt.scatter(y_test, y_pred_test)
@@ -183,6 +197,8 @@ plt.xlabel("MedPrice")
 plt.ylabel("Predicted MedPrice")
 plt.title("MedPrice vs Predicted MedPrice")
 plt.show()
+"""invisible
+"""
 
 # Checking Normality of errors
 sns.distplot(y_test - y_pred_test)
@@ -200,6 +216,8 @@ from sklearn.tree import DecisionTreeRegressor
 
 tree_regressor = DecisionTreeRegressor(max_depth=3, random_state=42)
 tree_regressor.fit(X_train, y_train)
+"""invisible
+"""
 
 # Model prediction on training & test data
 y_pred_train = tree_regressor.predict(X_train)
@@ -209,6 +227,8 @@ print("Train MSE: {:.2f}".format(mean_squared_error(y_train, y_pred_train)))
 
 print("Test MSE: {:.2f}".format(mean_squared_error(y_test, y_pred_test)))
 
+"""invisible
+"""
 # Plot outputs
 # Visualizing the differences between actual prices and predicted values
 plt.scatter(y_test, y_pred_test)
@@ -217,6 +237,8 @@ plt.ylabel("Predicted MedPrice")
 plt.title("MedPrice vs Predicted MedPrice")
 plt.show()
 
+"""invisible
+"""
 # Visualizing the decision tree
 from six import StringIO
 import sklearn.tree as tree
@@ -257,6 +279,8 @@ for train_index, test_index in kf.split(X_train):
         )
     )  # construct 5-fold cv datasets
 
+"""invisible
+"""
 max_depths = list(range(1, 11))  # candidate max_depth hyperparamters
 
 for max_depth in max_depths:
@@ -272,6 +296,8 @@ for (
     cv_results.append(mean_squared_error(regressor.predict(x_te), y_te))
 print("Tree depth: {}, Avg. MSE: {}".format(max_depth, np.mean(cv_results)))
 
+"""invisible
+"""
 # Hp tuning with Sklearn
 
 from sklearn.model_selection import GridSearchCV
@@ -297,6 +323,8 @@ grid_search = GridSearchCV(
 grid_search = grid_search.fit(X_train, y_train)
 
 
+"""invisible
+"""
 cvres = grid_search.cv_results_
 for mean_score, params in zip(cvres["mean_test_score"], cvres["params"]):
     print(-mean_score, params)

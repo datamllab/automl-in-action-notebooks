@@ -11,14 +11,22 @@ from sklearn.datasets import fetch_openml
 # Load the titanic dataset from openml
 titanic = fetch_openml(name="titanic", version=1, as_frame=True)
 
+"""invisible
+"""
 data, label = titanic.data.copy(), titanic.target.copy()
 data.head(5)
 
+"""invisible
+"""
 data.dtypes
 
+"""invisible
+"""
 # look at the data
 print("\n-- | Shape of the data -> (n_sample * n_feature) |--\n {}".format(data.shape))
 
+"""invisible
+"""
 label
 
 """
@@ -27,6 +35,8 @@ label
 
 data.isnull().sum()
 
+"""invisible
+"""
 # Check for missing values
 print("-- # missing values --\n{}".format(data.isnull().sum()))
 
@@ -37,6 +47,8 @@ print("-- # missing values --\n{}".format(data.isnull().sum()))
 # Remove 'cabin', 'boat', 'body' features
 data = data.drop(["cabin", "boat", "body", "home.dest"], axis=1)
 
+"""invisible
+"""
 data.head()
 
 """
@@ -50,13 +62,21 @@ boxplot.axhline(80)
 boxplot.set_title("Boxplot of fare grouped by embarked and pclass")
 boxplot.text(x=2.6, y=80, s="fare = $80", size="medium", color="blue", weight="bold")
 
+"""invisible
+"""
 data[data["embarked"].isnull()]
 
+"""invisible
+"""
 # Impute missing value in embarked
 data["embarked"][[168, 284]] = "C"
 
+"""invisible
+"""
 data[data["fare"].isnull()]
 
+"""invisible
+"""
 # Impute missing value in fare
 data["fare"][1225] = (
     data.groupby(["embarked", "pclass"]).get_group(("S", 3))["fare"].median()
@@ -83,9 +103,13 @@ print("\n-- # of missing values --\n{}".format(data.isnull().sum()))
 
 data.head()
 
+"""invisible
+"""
 data["title"] = data["name"].str.extract(" ([A-Za-z]+)\.", expand=False)
 data["title"].value_counts()
 
+"""invisible
+"""
 data["title"] = data["title"].replace(
     [
         "Lady",
@@ -108,6 +132,8 @@ data["title"] = data["title"].replace("Mme", "Mrs")
 
 data = data.drop(["name"], axis=1)
 
+"""invisible
+"""
 data.head()
 
 """
@@ -116,6 +142,8 @@ data.head()
 
 data["ticket"].describe()
 
+"""invisible
+"""
 import pandas as pd
 
 encode_col_list = ["sex", "embarked", "title"]
@@ -128,10 +156,16 @@ levels
 data["ticket"].describe()
 data.drop("ticket", axis=1, inplace=True)
 
+"""invisible
+"""
 data.shape
 
+"""invisible
+"""
 data.head()
 
+"""invisible
+"""
 data.dtypes
 
 """
@@ -167,6 +201,8 @@ dt_clf.fit(X_train, y_train)
 # Now predict the value of the digit on the test set:
 y_pred_test = dt_clf.predict(X_test)
 
+"""invisible
+"""
 # Display the testing results
 acc = accuracy_score(y_test, y_pred_test)
 print("Test accuracy: {:.2f} %".format(acc * 100))
@@ -176,6 +212,8 @@ disp.figure_.suptitle("Confusion Matrix of DT CLF")
 
 plt.show()
 
+"""invisible
+"""
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 
 # Train and test Random Forest
@@ -194,11 +232,15 @@ acc_gbdt = accuracy_score(y_test, y_pred_test)
 print("Random forest test accuracy: {:.2f} %".format(acc_rf * 100))
 print("GBDT test accuracy: {:.2f} %".format(acc_gbdt * 100))
 
+"""invisible
+"""
 disp = plot_confusion_matrix(rf_clf, X_test, y_test)
 disp.figure_.suptitle("Confusion Matrix of RF CLF")
 
 plt.show()
 
+"""invisible
+"""
 disp = plot_confusion_matrix(gbdt_clf, X_test, y_test)
 disp.figure_.suptitle("Confusion Matrix of GBDT CLF")
 

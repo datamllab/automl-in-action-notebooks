@@ -129,6 +129,9 @@ def plot_curve(x, y, xlabel, ylabel, title):
     plt.show()
 
 
+"""invisible
+"""
+
 mse = [
     random_tuner.oracle.get_trial(trial_id).score
     for trial_id in random_tuner.oracle.end_order

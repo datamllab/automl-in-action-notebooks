@@ -37,6 +37,9 @@ class DeepTuner(kt.Tuner):
         return model
 
 
+"""invisible
+"""
+
 from sklearn.datasets import load_digits
 
 # Load the hand-written digits dataset
@@ -64,6 +67,8 @@ print(y_train.shape)
 print(X_test.shape)
 print(y_train[:10])
 
+"""invisible
+"""
 import kerastuner as kt
 
 
@@ -93,6 +98,8 @@ random_tuner = DeepTuner(
 
 random_tuner.search(X_train, y_train, validation_data=(X_val, y_val), epochs=10)
 random_tuner.search_space_summary()
+"""invisible
+"""
 
 best_model = random_tuner.get_best_models(1)[0]
 y_pred_test = best_model.evaluate(X_test, y_test)

@@ -14,7 +14,7 @@ def nb_to_py(nb_path, py_path):
     content = f.read()
     f.close()
     nb = json.loads(content)
-    py = ''
+    py = ""
     for cell in nb["cells"]:
         if cell["cell_type"] == "code":
             # Is it a shell cell?
@@ -119,8 +119,6 @@ def py_to_nb(py_path, nb_path, fill_outputs=False):
                         os.remove(fpath)
 
 
-
-
 def validate(py):
     """Validate the format of a tutobook script.
 
@@ -158,9 +156,7 @@ def validate(py):
             )
     for i, line in enumerate(lines):
         if line.endswith(" "):
-            raise ValueError(
-                "Found trailing space on line %d; line: `%s`" % (i, line)
-            )
+            raise ValueError("Found trailing space on line %d; line: `%s`" % (i, line))
     # Validate style with black
     fpath = "/tmp/" + str(random.randint(1e6, 1e7)) + ".py"
     f = open(fpath, "w")

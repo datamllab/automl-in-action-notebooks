@@ -5,6 +5,8 @@ pip install -r https://raw.githubusercontent.com/datamllab/automl-in-action-note
 import tensorflow as tf
 import autokeras as ak
 
+"""invisible
+"""
 gpus = tf.config.experimental.list_physical_devices("GPU")
 print(gpus)
 
@@ -26,6 +28,8 @@ news_test = fetch_20newsgroups(
 
 doc_train, label_train = np.array(news_train.data), np.array(news_train.target)
 doc_test, label_test = np.array(news_test.data), np.array(news_test.target)
+"""invisible
+"""
 
 print(
     "Unique labels {}. \nNumber of unique labels: {}.\n\n".format(
@@ -49,6 +53,8 @@ clf = ak.TextClassifier(
 
 # Feed the text classifier with training data.
 clf.fit(doc_train, label_train, verbose=2)
+"""invisible
+"""
 
 test_loss, test_acc = clf.evaluate(doc_test, label_test, verbose=0)
 print("Test accuracy: ", test_acc)

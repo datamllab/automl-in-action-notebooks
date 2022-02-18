@@ -28,6 +28,8 @@ X_train, X_val, y_train, y_val = train_test_split(
     X_train, y_train, test_size=0.2, shuffle=False
 )
 
+"""invisible
+"""
 X_train.shape, X_test.shape
 
 """
@@ -265,6 +267,8 @@ class EvolutionaryOracle(oracle_module.Oracle):
         self._max_collisions = state["max_collisions"]
 
 
+"""invisible
+"""
 evo_tuner_p20c5 = LightGBMTuner(
     oracle=EvolutionaryOracle(
         objective=kt.Objective("mse", "min"),
@@ -303,6 +307,8 @@ bo_tuner = LightGBMTuner(
 
 bo_tuner.search(X_train, y_train, validation_data=(X_val, y_val))
 
+"""invisible
+"""
 from sklearn.metrics import mean_squared_error
 
 best_model = random_tuner.get_best_models(1)[0]
@@ -310,8 +316,12 @@ y_pred_test = best_model.predict(X_test)
 test_mse = mean_squared_error(y_test, y_pred_test)
 print("The prediction MSE on test set: {}".format(test_mse))
 
+"""invisible
+"""
 random_tuner.results_summary(1)
 
+"""invisible
+"""
 from sklearn.metrics import mean_squared_error
 
 best_model = bo_tuner.get_best_models(1)[0]
@@ -319,8 +329,12 @@ y_pred_test = best_model.predict(X_test)
 test_mse = mean_squared_error(y_test, y_pred_test)
 print("The prediction MSE on test set: {}".format(test_mse))
 
+"""invisible
+"""
 bo_tuner.results_summary(1)
 
+"""invisible
+"""
 from sklearn.metrics import mean_squared_error
 
 best_model = evo_tuner_p20c5.get_best_models(1)[0]
@@ -328,8 +342,12 @@ y_pred_test = best_model.predict(X_test)
 test_mse = mean_squared_error(y_test, y_pred_test)
 print("The prediction MSE on test set: {}".format(test_mse))
 
+"""invisible
+"""
 evo_tuner_p20c5.results_summary(1)
 
+"""invisible
+"""
 """
 ### Plot search curves
 """
@@ -358,6 +376,8 @@ def plot_curves(
     plt.show()
 
 
+"""invisible
+"""
 mse_evo = [
     evo_tuner_p20c5.oracle.get_trial(trial_id).score
     for trial_id in evo_tuner_p20c5.oracle.end_order
@@ -367,6 +387,8 @@ plot_curve(
     ids, mse_evo, "Trials in finishing order", "Validation MSE", "Searched results"
 )
 
+"""invisible
+"""
 high_value = float("inf")
 high_mse_evo = []
 for value in mse_evo:
@@ -457,6 +479,8 @@ evo_tuner_p20c10 = LightGBMTuner(
 
 evo_tuner_p20c10.search(X_train, y_train, validation_data=(X_val, y_val))
 
+"""invisible
+"""
 from sklearn.metrics import mean_squared_error
 
 best_model = evo_tuner_p20c5.get_best_models(1)[0]
@@ -464,6 +488,8 @@ y_pred_test = best_model.predict(X_test)
 test_mse = mean_squared_error(y_test, y_pred_test)
 print("The prediction MSE on test set: {}".format(test_mse))
 
+"""invisible
+"""
 mse_evo_c10 = [
     evo_tuner_p20c10.oracle.get_trial(trial_id).score
     for trial_id in evo_tuner_p20c10.oracle.end_order
