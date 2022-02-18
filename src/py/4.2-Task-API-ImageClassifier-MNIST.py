@@ -1,5 +1,5 @@
 """shell
-!pip install -r
+pip install -r
 https://raw.githubusercontent.com/datamllab/automl-in-action-notebooks/master/requirements.txt
 https://raw.githubusercontent.com/datamllab/automl-in-action-notebooks/master/requirements.txt
 """
