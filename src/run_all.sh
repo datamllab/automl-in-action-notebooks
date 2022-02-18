@@ -1,9 +1,6 @@
 #!/bin/bash
-for filename in *.ipynb; do
-    jupyter nbconvert "$filename" --to script
-done
 
-for filename in *.py; do
+for filename in py/*.py; do
     echo "Running $filename"
     if ipython "$filename" > /dev/null; then
         echo "Succeeded $filename"
