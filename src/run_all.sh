@@ -1,6 +1,8 @@
 #!/bin/bash
 
-for filename in py/*.py; do
+mkdir tmp
+cd tmp
+for filename in ../py/*.py; do
     echo "Running $filename"
     if ipython "$filename" > /dev/null; then
         echo "Succeeded $filename"
@@ -8,3 +10,5 @@ for filename in py/*.py; do
         echo "Failed $filename"
     fi
 done
+cd ..
+rm -rf tmp
