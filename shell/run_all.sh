@@ -1,7 +1,7 @@
 #!/bin/bash
-#for filename in *.ipynb; do
-    #jupyter nbconvert "$filename" --to script
-#done
+for filename in *.ipynb; do
+    jupyter nbconvert "$filename" --to script
+done
 
 for filename in *.py; do
     echo "Running $filename"
