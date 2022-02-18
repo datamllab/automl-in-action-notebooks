@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 TIMEOUT = 60 * 60
-MAX_LOC = 300
+MAX_LOC = 400
 
 
 def nb_to_py(nb_path, py_path):
@@ -46,7 +46,7 @@ def nb_to_py(nb_path, py_path):
         f.close()
 
 
-def py_to_nb(py_path, nb_path, fill_outputs=True):
+def py_to_nb(py_path, nb_path, fill_outputs=False):
     f = open(py_path)
     py = f.read()
     f.close()
