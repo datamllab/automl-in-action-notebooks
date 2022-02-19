@@ -151,8 +151,7 @@ for i in encode_col_list:
     data = pd.concat([data, pd.get_dummies(data[i], prefix=i)], axis=1)
     data.drop(i, axis=1, inplace=True)
 
-# direct drop the ticket feature here since it is a categorical feature with too high
-levels
+# direct drop the ticket feature here since it is a categorical feature with too high levels
 data["ticket"].describe()
 data.drop("ticket", axis=1, inplace=True)
 

@@ -35,7 +35,8 @@ multi_input_learner = ak.AutoModel(
     inputs=[ak.ImageInput(), ak.StructuredDataInput()],
     outputs=ak.ClassificationHead(),
     max_trials=3,
-    #     project_name='io_api_multimodal',
+    overwrite=True,
+    project_name='io_api_multimodal',
 )
 
 # Fit the model with prepared data.

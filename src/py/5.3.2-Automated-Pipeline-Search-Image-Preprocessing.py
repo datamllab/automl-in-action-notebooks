@@ -68,7 +68,7 @@ import timeit
 input_node = ak.ImageInput()
 output_node = ak.ImageBlock(
     # do not specify if we want to use normalization and let it to search automatically
-    normlize=None,
+    normalize=None,
     # do not specify if we want to use adata ugmentation method and let it to search automatically
     augment=None,
     # Only search resnet architectures.

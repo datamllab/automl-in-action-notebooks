@@ -43,7 +43,8 @@ multi_output_learner = ak.AutoModel(
     inputs=[ak.ImageInput(), ak.StructuredDataInput()],
     outputs=[ak.ClassificationHead(), ak.RegressionHead()],
     max_trials=3,
-    #     project_name='io_api_multitask'
+    overwrite=True,
+    project_name='io_api_multitask',
 )
 
 # Fit the model with prepared data.

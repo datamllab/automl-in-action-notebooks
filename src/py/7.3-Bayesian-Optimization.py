@@ -78,10 +78,9 @@ class LightGBMTuner(kt.engine.base_tuner.BaseTuner):
             X_val, num_iteration=model.best_iteration_
         )  # evaluate the model
         eval_mse = mean_squared_error(y_val, y_pred)
-        self.oracle.update_trial(
-            trial.trial_id, {"mse": eval_mse}
-        )  # inform the oracle of the eval result, the result is a dictionary with the metric names as the keys.
         self.save_model(trial.trial_id, model)  # save the model to disk
+        # inform the oracle of the eval result, the result is a dictionary with the metric names as the keys.
+        return {"mse": eval_mse}
 
     def save_model(self, trial_id, model, step=0):
         fname = os.path.join(self.get_trial_dir(trial_id), "model.txt")
