@@ -1,4 +1,6 @@
 #!/bin/bash
+wget https://github.com/datamllab/automl-in-action-notebooks/raw/master/data/mnist.tar.gz
+tar xzf mnist.tar.gz
 
 for filename in py/*.py; do
     mkdir tmp
