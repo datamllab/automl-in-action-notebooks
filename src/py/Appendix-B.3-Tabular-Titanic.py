@@ -185,7 +185,7 @@ print("\n--Shape of the testing data--\n {}".format(X_test.shape))
 ## Build up a Decision Tree, a Random Forest & a GBDT classifier
 """
 
-from sklearn.metrics import accuracy_score, plot_confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
 
 """
@@ -206,9 +206,10 @@ y_pred_test = dt_clf.predict(X_test)
 acc = accuracy_score(y_test, y_pred_test)
 print("Test accuracy: {:.2f} %".format(acc * 100))
 
-disp = plot_confusion_matrix(dt_clf, X_test, y_test)
-disp.figure_.suptitle("Confusion Matrix of DT CLF")
+cm = confusion_matrix(y_test, y_pred_test, labels=dt_clf.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=dt_clf.classes_)
 
+plt.title(label="Confusion Matrix of DT CLF")
 plt.show()
 
 """invisible
@@ -218,14 +219,14 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 # Train and test Random Forest
 rf_clf = RandomForestClassifier(n_estimators=100, random_state=42)
 rf_clf.fit(X_train, y_train)
-y_pred_test = rf_clf.predict(X_test)
-acc_rf = accuracy_score(y_test, y_pred_test)
+y_pred_test_rf = rf_clf.predict(X_test)
+acc_rf = accuracy_score(y_test, y_pred_test_rf)
 
 # Train and test GBDT
 gbdt_clf = GradientBoostingClassifier(n_estimators=100, random_state=42)
 gbdt_clf.fit(X_train, y_train)
-y_pred_test = gbdt_clf.predict(X_test)
-acc_gbdt = accuracy_score(y_test, y_pred_test)
+y_pred_test_gbdt = gbdt_clf.predict(X_test)
+acc_gbdt = accuracy_score(y_test, y_pred_test_gbdt)
 
 # Pring the results
 print("Random forest test accuracy: {:.2f} %".format(acc_rf * 100))
@@ -233,14 +234,16 @@ print("GBDT test accuracy: {:.2f} %".format(acc_gbdt * 100))
 
 """invisible
 """
-disp = plot_confusion_matrix(rf_clf, X_test, y_test)
-disp.figure_.suptitle("Confusion Matrix of RF CLF")
+cm = confusion_matrix(y_test, y_pred_test_rf, labels=rf_clf.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=rf_clf.classes_)
 
+plt.title(label="Confusion Matrix of RF CLF")
 plt.show()
 
 """invisible
 """
-disp = plot_confusion_matrix(gbdt_clf, X_test, y_test)
-disp.figure_.suptitle("Confusion Matrix of GBDT CLF")
+cm = confusion_matrix(y_test, y_pred_test_gbdt, labels=gbdt_clf.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=gbdt_clf.classes_)
 
+plt.title(label="Confusion Matrix of GBDT CLF")
 plt.show()

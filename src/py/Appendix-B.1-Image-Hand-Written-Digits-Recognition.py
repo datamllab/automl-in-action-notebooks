@@ -169,11 +169,13 @@ y_pred_test = clf.predict(X_test)
 acc = accuracy_score(y_test, y_pred_test)
 print("The prediction accuracy: {:.2f} %".format(acc * 100))
 
-from sklearn.metrics import plot_confusion_matrix
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
-disp = plot_confusion_matrix(clf, X_test, y_test)
-disp.figure_.suptitle("Confusion Matrix (linear SVC)")
+cm = confusion_matrix(y_test, y_pred_test, labels=clf.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+disp.plot()
 
+plt.title(label="Confusion Matrix (linear SVC)")
 plt.show()
 
 """
@@ -259,7 +261,9 @@ test_acc = accuracy_score(y_test, y_pred_test)
 print("The prediction accuracy on training set: {:.2f} %".format(train_acc * 100))
 print("The prediction accuracy on test set: {:.2f} %".format(test_acc * 100))
 
-disp = plot_confusion_matrix(best_pipeline, X_test, y_test)
-disp.figure_.suptitle("Confusion Matrix (PCA + RBF SVC)")
+cm = confusion_matrix(y_test, y_pred_test, labels=best_pipeline.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=best_pipeline.classes_)
+disp.plot()
 
+plt.title(label="Confusion Matrix (PCA + RBF SVC)")
 plt.show()

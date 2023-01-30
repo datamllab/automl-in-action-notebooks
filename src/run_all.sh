@@ -1,6 +1,8 @@
 #!/bin/bash
 wget https://github.com/datamllab/automl-in-action-notebooks/raw/master/data/mnist.tar.gz
 tar xzf mnist.tar.gz
+wget https://github.com/datamllab/automl-in-action-notebooks/raw/master/data/imdb.tar.gz
+tar xzf imdb.tar.gz
 
 for filename in py/*.py; do
     mkdir tmp

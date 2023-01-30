@@ -195,7 +195,7 @@ class BayesianOptimizationOracle(oracle_module.Oracle):
                     trial_value = hp.default
 
                 # Embed an HP value into the continuous space [0, 1].
-                prob = hp_module.value_to_cumulative_prob(trial_value, hp)
+                prob = hp.value_to_prob(trial_value)
                 vector.append(prob)
 
             if trial.status == "COMPLETED":
@@ -222,7 +222,7 @@ class BayesianOptimizationOracle(oracle_module.Oracle):
             else:
                 prob = vector[vector_index]
                 vector_index += 1
-                value = hp_module.cumulative_prob_to_value(prob, hp)
+                value = hp.prob_to_value(prob)
 
             if hps.is_active(hp):
                 hps.values[hp.name] = value
@@ -299,8 +299,9 @@ class BayesianOptimizationOracle(oracle_module.Oracle):
             result = scipy_optimize.minimize(
                 acq_funcs[self.acq_type], x0=x_try, bounds=bounds, method="L-BFGS-B"
             )
-            if result.fun[0] < optimal_val:
-                optimal_val = result.fun[0]
+            result_fun = result.fun if np.isscalar(result.fun) else result.fun[0]
+            if result_fun < optimal_val:
+                optimal_val = result_fun
                 optimal_x = result.x
 
         values = self._vector_to_values(optimal_x)

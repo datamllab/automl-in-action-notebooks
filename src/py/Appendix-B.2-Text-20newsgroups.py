@@ -77,18 +77,19 @@ label_pred_test = lr_clf.predict(X_test_tfidf)
 lr_acc = accuracy_score(label_test, label_pred_test)
 print("Test accuracy: {:.2f} %".format(lr_acc * 100))
 
-from sklearn.metrics import plot_confusion_matrix
 
 # Display the testing results
 """inline
 matplotlib inline
 """
 import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
-disp = plot_confusion_matrix(lr_clf, X_test_tfidf, label_test)
-disp.figure_.suptitle("Confusion Matrix")
-disp.figure_.set_size_inches(20, 10)
+cm = confusion_matrix(label_test, label_pred_test, labels=lr_clf.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=lr_clf.classes_)
+plt.figure(figsize=(20, 10))
 
+plt.title(label="Confusion Matrix")
 plt.show()
 
 """
@@ -111,10 +112,11 @@ lr_acc = accuracy_score(label_test, label_pred_test)
 print("Test accuracy: {:.2f} %".format(lr_acc * 100))
 
 # Display the testing results
-disp = plot_confusion_matrix(nb_clf, X_test_tfidf, label_test)
-disp.figure_.suptitle("Confusion Matrix")
-disp.figure_.set_size_inches(20, 10)
+cm = confusion_matrix(label_test, label_pred_test, labels=nb_clf.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=nb_clf.classes_)
 
+plt.figure(figsize=(20, 10))
+plt.title(label="Confusion Matrix")
 plt.show()
 
 """
